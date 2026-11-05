@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Chrome Web Store guidance: 96x96 artwork inside 16px transparent padding. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c6cff"/>
+      <stop offset="1" stop-color="#4338ca"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="96" height="96" rx="22" fill="url(#bg)"/>
+
+  <!-- Left pane: Conversation -->
+  <rect x="26" y="30" width="36" height="68" rx="7" fill="#fff"/>
+  <rect x="31" y="37" width="22" height="9" rx="4.5" fill="#c7c2ff"/>
+  <rect x="37" y="51" width="20" height="9" rx="4.5" fill="#8b80ff"/>
+  <rect x="31" y="65" width="24" height="9" rx="4.5" fill="#c7c2ff"/>
+  <rect x="31" y="79" width="16" height="9" rx="4.5" fill="#c7c2ff"/>
+
+  <!-- Right pane: Files changed -->
+  <rect x="66" y="30" width="36" height="68" rx="7" fill="#fff"/>
+  <rect x="71" y="38" width="26" height="6" rx="3" fill="#d4d4d8"/>
+  <rect x="71" y="50" width="26" height="6" rx="3" fill="#f87171"/>
+  <rect x="71" y="62" width="26" height="6" rx="3" fill="#34d399"/>
+  <rect x="71" y="74" width="26" height="6" rx="3" fill="#34d399"/>
+  <rect x="71" y="86" width="18" height="6" rx="3" fill="#d4d4d8"/>
+</svg>

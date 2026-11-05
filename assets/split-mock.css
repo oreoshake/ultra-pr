@@ -1,0 +1,22 @@
+/* Shared wireframe of a PR in split view: Conversation left, Files changed right. */
+.split { display: flex; gap: 10px; height: 100%; }
+.pane {
+  flex: 1; background: #fff; border-radius: 12px; padding: 22px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .08), 0 8px 24px rgba(15, 23, 42, .08);
+  display: flex; flex-direction: column; gap: 14px; overflow: hidden;
+  outline: 3px solid transparent;
+}
+.pane.active { outline-color: #7c6cff; }
+.tabs { display: flex; gap: 18px; border-bottom: 1px solid #e4e4e7; padding-bottom: 10px; font-size: 15px; color: #71717a; }
+.tabs .on { color: #18181b; font-weight: 600; box-shadow: 0 12px 0 -9px #7c6cff; }
+.title { font-size: 22px; font-weight: 650; color: #18181b; }
+.bar { height: 10px; border-radius: 5px; background: #e4e4e7; }
+.comment { display: flex; gap: 12px; }
+.avatar { width: 32px; height: 32px; border-radius: 50%; background: #c7c2ff; flex: none; }
+.bubble { flex: 1; border: 1px solid #e4e4e7; border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 9px; }
+.file { border: 1px solid #e4e4e7; border-radius: 10px; overflow: hidden; }
+.file-head { background: #f4f4f5; padding: 10px 14px; font: 13px ui-monospace, Menlo, monospace; color: #3f3f46; }
+.line { height: 22px; display: flex; align-items: center; padding: 0 14px; gap: 10px; }
+.line .bar { height: 8px; }
+.line.del { background: #fee2e2; } .line.del .bar { background: #fca5a5; }
+.line.add { background: #dcfce7; } .line.add .bar { background: #86efac; }
