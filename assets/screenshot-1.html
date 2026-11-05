@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ultra PR screenshot (1280x800)</title>
+<link rel="stylesheet" href="split-mock.css">
+<style>
+  html, body { margin: 0; width: 1280px; height: 800px; overflow: hidden; }
+  body {
+    background: linear-gradient(135deg, #ede9fe, #c7d2fe);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding: 36px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 22px;
+  }
+  .caption { text-align: center; font-size: 28px; font-weight: 650; color: #312e81; }
+  .caption span { color: #6d28d9; }
+  .window { flex: 1; background: #e4e4e7; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column;
+            box-shadow: 0 24px 60px rgba(49, 46, 129, .25); }
+  .chrome { height: 78px; background: #dedee3; padding: 10px 16px 0; box-sizing: border-box; }
+  .tabstrip { display: flex; gap: 6px; align-items: flex-end; height: 30px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; background: #f87171; margin: 0 6px 9px 0; }
+  .dot + .dot { background: #fbbf24; } .dot + .dot + .dot { background: #4ade80; margin-right: 18px; }
+  .tab { width: 200px; height: 30px; border-radius: 8px 8px 0 0; background: #c9c9d1; font-size: 12px; color: #3f3f46;
+         display: block; line-height: 30px; padding: 0 12px; box-sizing: border-box;
+         white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tab.split-tab { background: #fff; }
+  .tab.split-tab + .tab.split-tab { border-left: 2px solid #7c6cff; }
+  .omnibox { margin-top: 8px; height: 30px; border-radius: 15px; background: #fff; display: flex; align-items: center; padding: 0 14px;
+             font-size: 13px; color: #52525b; gap: 10px; }
+  .split-icon { width: 18px; height: 13px; border: 2px solid #7c6cff; border-radius: 3px; box-sizing: border-box; position: relative; }
+  .split-icon::after { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; border-left: 2px solid #7c6cff; }
+  .content { flex: 1; padding: 10px; }
+</style>
+</head>
+<body>
+  <div class="caption">Open any pull request. <span>Conversation and Files changed open together.</span></div>
+  <div class="window">
+    <div class="chrome">
+      <div class="tabstrip">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="tab">Inbox</div>
+        <div class="tab split-tab">Add split view support · Pull Request</div>
+        <div class="tab split-tab">Files changed · Pull Request</div>
+      </div>
+      <div class="omnibox"><div class="split-icon"></div>github.com/acme/widgets/pull/42/files</div>
+    </div>
+    <div class="content">
+      <div class="split">
+        <div class="pane">
+          <div class="title">Add split view support #42</div>
+          <div class="tabs"><span class="on">Conversation</span><span>Commits</span><span>Checks</span><span>Files changed</span></div>
+          <div class="comment"><div class="avatar"></div><div class="bubble"><div class="bar" style="width:90%"></div><div class="bar" style="width:75%"></div><div class="bar" style="width:40%"></div></div></div>
+          <div class="comment"><div class="avatar" style="background:#a7f3d0"></div><div class="bubble"><div class="bar" style="width:65%"></div><div class="bar" style="width:50%"></div></div></div>
+          <div class="comment"><div class="avatar" style="background:#fde68a"></div><div class="bubble"><div class="bar" style="width:80%"></div></div></div>
+        </div>
+        <div class="pane active">
+          <div class="title">Add split view support #42</div>
+          <div class="tabs"><span>Conversation</span><span>Commits</span><span>Checks</span><span class="on">Files changed</span></div>
+          <div class="file">
+            <div class="file-head">src/background.js</div>
+            <div class="line"><div class="bar" style="width:40%"></div></div>
+            <div class="line del"><div class="bar" style="width:62%"></div></div>
+            <div class="line add"><div class="bar" style="width:70%"></div></div>
+            <div class="line add"><div class="bar" style="width:55%"></div></div>
+            <div class="line"><div class="bar" style="width:30%"></div></div>
+          </div>
+          <div class="file">
+            <div class="file-head">manifest.json</div>
+            <div class="line"><div class="bar" style="width:35%"></div></div>
+            <div class="line add"><div class="bar" style="width:50%"></div></div>
+            <div class="line"><div class="bar" style="width:25%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

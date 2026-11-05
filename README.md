@@ -15,3 +15,21 @@ Chrome 155+ (for `chrome.tabs.create({ splitWithTabId })`).
 
 1. Go to `chrome://extensions` and enable **Developer mode**.
 2. Click **Load unpacked** and select this directory.
+
+## Privacy
+
+Ultra PR doesn't collect, store or transmit any personal data. It reads the URL of github.com tabs to spot pull request pages, and keeps a list of already-paired tab IDs in session storage, which Chrome clears when the browser closes.
+
+## Tests
+
+`npm test` (Node version in `.node-version`).
+
+## Building for the Chrome Web Store
+
+- `scripts/render-assets.sh` renders `icons/` and `store/` from the sources in `assets/` using headless Chrome.
+- `scripts/package.sh` writes the upload zip to `dist/`.
+- `store/listing.md` has the listing copy and privacy answers for the dashboard.
+
+## License
+
+[MIT](LICENSE)

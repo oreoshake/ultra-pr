@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Simplified for 16px and 32px: full-bleed, no inner detail beyond the two panes. -->
+  <rect width="32" height="32" rx="7" fill="#5b4ee6"/>
+  <rect x="4" y="5" width="11" height="22" rx="2.5" fill="#fff"/>
+  <rect x="17" y="5" width="11" height="22" rx="2.5" fill="#fff"/>
+  <rect x="19" y="11" width="7" height="2.5" rx="1.25" fill="#ef4444"/>
+  <rect x="19" y="16" width="7" height="2.5" rx="1.25" fill="#10b981"/>
+  <rect x="6" y="9" width="7" height="3" rx="1.5" fill="#a59cff"/>
+  <rect x="6" y="15" width="6" height="3" rx="1.5" fill="#a59cff"/>
+</svg>

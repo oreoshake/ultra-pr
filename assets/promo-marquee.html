@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ultra PR marquee promo tile (1400x560)</title>
+<link rel="stylesheet" href="split-mock.css">
+<style>
+  html, body { margin: 0; width: 1400px; height: 560px; overflow: hidden; }
+  body {
+    background: linear-gradient(135deg, #7c6cff, #4338ca);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    display: flex; align-items: center; gap: 64px; padding: 0 80px; box-sizing: border-box;
+  }
+  .copy { color: #fff; width: 440px; flex: none; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand img { width: 96px; height: 96px; margin: -12px; }
+  h1 { margin: 0; font-size: 56px; font-weight: 750; letter-spacing: -1px; }
+  p { margin: 22px 0 0; font-size: 26px; line-height: 1.35; opacity: .92; }
+  .mock { flex: 1; height: 400px; background: rgba(255,255,255,.18); border-radius: 18px; padding: 14px; }
+  .pane { padding: 18px; gap: 12px; }
+</style>
+</head>
+<body>
+  <div class="copy">
+    <div class="brand"><img src="icon.svg" alt=""><h1>Ultra PR</h1></div>
+    <p>Every GitHub pull request opens in Chrome split view: the discussion on the left, the diff on the right.</p>
+  </div>
+  <div class="mock">
+    <div class="split">
+      <div class="pane">
+        <div class="tabs"><span class="on">Conversation</span><span>Commits</span><span>Files changed</span></div>
+        <div class="comment"><div class="avatar"></div><div class="bubble"><div class="bar" style="width:85%"></div><div class="bar" style="width:60%"></div></div></div>
+        <div class="comment"><div class="avatar" style="background:#a7f3d0"></div><div class="bubble"><div class="bar" style="width:70%"></div><div class="bar" style="width:40%"></div></div></div>
+      </div>
+      <div class="pane active">
+        <div class="tabs"><span>Conversation</span><span>Commits</span><span class="on">Files changed</span></div>
+        <div class="file">
+          <div class="file-head">src/background.js</div>
+          <div class="line"><div class="bar" style="width:50%"></div></div>
+          <div class="line del"><div class="bar" style="width:65%"></div></div>
+          <div class="line add"><div class="bar" style="width:72%"></div></div>
+          <div class="line add"><div class="bar" style="width:45%"></div></div>
+          <div class="line"><div class="bar" style="width:30%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "ultra-pr",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test",
+    "assets": "scripts/render-assets.sh",
+    "package": "scripts/package.sh"
+  }
+}
