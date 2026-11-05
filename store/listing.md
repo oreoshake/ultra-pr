@@ -47,4 +47,4 @@ Copy these into the [Developer Dashboard](https://chrome.google.com/webstore/dev
 
 **Data usage:** The extension doesn't collect or use any user data. Tick none of the data categories, then certify the three disclosures.
 
-**Privacy policy URL:** Not required when no user data is collected. If the dashboard asks for one anyway, link the README section "Privacy".
+**Privacy policy URL:** https://github.com/oreoshake/ultra-pr/blob/main/PRIVACY.md

@@ -18,7 +18,7 @@ Chrome 155+ (for `chrome.tabs.create({ splitWithTabId })`).
 
 ## Privacy
 
-Ultra PR doesn't collect, store or transmit any personal data. It reads the URL of github.com tabs to spot pull request pages, and keeps a list of already-paired tab IDs in session storage, which Chrome clears when the browser closes.
+Ultra PR doesn't collect or transmit any data. See the [privacy policy](PRIVACY.md).
 
 ## Tests
 
