@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Ultra PR",
+  "version": "0.1.0",
+  "description": "Keeps a GitHub pull request's Conversation and Files changed views side by side in split view.",
+  "minimum_chrome_version": "155",
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "permissions": ["storage"],
+  "host_permissions": ["https://github.com/*"]
+}
