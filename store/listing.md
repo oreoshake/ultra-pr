@@ -21,6 +21,7 @@ Copy these into the [Developer Dashboard](https://chrome.google.com/webstore/dev
 > - Focus stays on the view you opened.
 > - Follow a link to another pull request in either pane and the other pane follows it.
 > - Follow a link anywhere else and the other pane closes.
+> - Close either pane and the other closes with it.
 > - If you separate the split, Ultra PR leaves that tab alone until it moves to a different pull request.
 >
 > Ultra PR only runs on github.com, doesn't change GitHub pages, and doesn't collect or send any data.

@@ -9,6 +9,7 @@ While the split is open, the two sides stay together:
 
 - Follow a link to another PR in either pane and the other pane switches to that PR's other view.
 - Follow a link anywhere else (including a PR's Commits or Checks tabs) and the other pane closes.
+- Close either pane and the other one closes too. If you separate the split first, the tabs are left alone.
 
 Each tab is paired once per PR. If you separate the split, the extension won't reopen it until that tab navigates to a different PR.
 
