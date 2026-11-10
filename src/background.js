@@ -127,27 +127,84 @@ async function onTabNavigated(tab) {
   await pairPrTab(tab);
 }
 
-// Handle updates one at a time so a navigation and the partner updates it
+// Handle events one at a time so a navigation and the partner updates it
 // causes can't interleave and send the two tabs chasing each other.
 let queue = Promise.resolve();
 
+function enqueue(label, task) {
+  queue = queue.then(task).catch((error) => console.warn(`Ultra PR: could not ${label}`, error));
+}
+
+// How long to wait after a split dissolves before deciding the user separated
+// it. Closing one side of a split also dissolves it, and Chrome may report that
+// before it reports the tab closing; by then onRemoved has handled the pair.
+const SEPARATE_DELAY_MS = 500;
+
+// If the user separated the split (or moved one side out of the window), the
+// two tabs are independent again: stop syncing them and stop closing one when
+// the other closes.
+async function forgetIfSeparated(tabId) {
+  const pairs = await getMap(PAIRS_KEY);
+  const partnerId = pairs[tabId];
+  if (partnerId === undefined) return;
+
+  let tab, partner;
+  try {
+    [tab, partner] = await Promise.all([chrome.tabs.get(tabId), chrome.tabs.get(partnerId)]);
+  } catch {
+    return; // One side closed; onRemoved takes care of the pair.
+  }
+  if (!inSplit(tab) || partner.splitViewId !== tab.splitViewId) await forgetPair(tabId);
+}
+
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.splitViewId === chrome.tabs.SPLIT_VIEW_ID_NONE) {
+    setTimeout(() => enqueue("check split", () => forgetIfSeparated(tabId)), SEPARATE_DELAY_MS);
+  }
+
   // Only react to the tab itself navigating. Leaving github.com hides the new
   // URL from us, so there the navigation shows up as a status change with no
   // URL on the tab. A tab that hasn't committed its first URL yet has url "".
   const navigated = changeInfo.url !== undefined || (changeInfo.status !== undefined && tab.url === undefined);
   if (!navigated || tab.url === "") return;
 
-  queue = queue
-    .then(() => onTabNavigated(tab))
-    .catch((error) => console.warn("Ultra PR: could not update split view", error));
+  enqueue("update split view", () => onTabNavigated(tab));
 });
 
-chrome.tabs.onRemoved.addListener((tabId) => {
-  queue = queue
-    .then(async () => {
-      await setHandled(tabId, undefined);
-      await forgetPair(tabId);
-    })
-    .catch((error) => console.warn("Ultra PR: could not clean up closed tab", error));
+// Closing one side of an Ultra PR split closes the other.
+chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+  enqueue("clean up closed tab", async () => {
+    const partnerId = (await getMap(PAIRS_KEY))[tabId];
+    // Forget the pair first so the partner's own onRemoved doesn't come back here.
+    await forgetPair(tabId);
+    await setHandled(tabId, undefined);
+    // When the whole window closes, the partner is going with it.
+    if (partnerId === undefined || removeInfo.isWindowClosing) return;
+    try {
+      await chrome.tabs.remove(partnerId);
+    } catch {
+      // Already gone (for example, both tabs were closed together).
+    }
+  });
+});
+
+// Chrome can swap a tab for a new one with a different ID (e.g. prerendering).
+// Carry the pairing over so the split keeps working.
+chrome.tabs.onReplaced.addListener((addedTabId, removedTabId) => {
+  enqueue("track replaced tab", async () => {
+    const pairs = await getMap(PAIRS_KEY);
+    const partnerId = pairs[removedTabId];
+    if (partnerId !== undefined) {
+      delete pairs[removedTabId];
+      pairs[addedTabId] = partnerId;
+      pairs[partnerId] = addedTabId;
+      await chrome.storage.session.set({ [PAIRS_KEY]: pairs });
+    }
+    const handled = await getMap(HANDLED_KEY);
+    if (handled[removedTabId] !== undefined) {
+      handled[addedTabId] = handled[removedTabId];
+      delete handled[removedTabId];
+      await chrome.storage.session.set({ [HANDLED_KEY]: handled });
+    }
+  });
 });
