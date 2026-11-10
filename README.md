@@ -22,6 +22,10 @@ Chrome 155+ (for `chrome.tabs.create({ splitWithTabId })`).
 1. Go to `chrome://extensions` and enable **Developer mode**.
 2. Click **Load unpacked** and select this directory.
 
+## Changes
+
+See the [changelog](CHANGELOG.md).
+
 ## Privacy
 
 Ultra PR doesn't collect or transmit any data. See the [privacy policy](PRIVACY.md).
@@ -35,6 +39,7 @@ Ultra PR doesn't collect or transmit any data. See the [privacy policy](PRIVACY.
 - `scripts/render-assets.sh` renders `icons/` and `store/` from the sources in `assets/` using headless Chrome.
 - `scripts/package.sh` writes the upload zip to `dist/`.
 - `store/listing.md` has the listing copy and privacy answers for the dashboard.
+- Before a release, bump `version` in `manifest.json` and add an entry to `CHANGELOG.md`.
 
 ## License
 

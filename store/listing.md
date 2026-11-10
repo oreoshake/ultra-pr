@@ -27,6 +27,8 @@ Copy these into the [Developer Dashboard](https://chrome.google.com/webstore/dev
 > Ultra PR only runs on github.com, doesn't change GitHub pages, and doesn't collect or send any data.
 >
 > Requires Chrome 155 or later.
+>
+> What's new in each version: https://github.com/oreoshake/ultra-pr/blob/main/CHANGELOG.md
 
 **Graphics:**
 
