@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Syntax-check extension scripts
+        run: for f in src/*.js; do node --check "$f"; done
+
+      - name: Manifest is valid JSON
+        run: node -e 'JSON.parse(require("fs").readFileSync("manifest.json", "utf8"))'
+
+      - name: Changelog has an entry for the manifest version
+        run: |
+          version=$(node -p 'require("./manifest.json").version')
+          top=$(sed -n 's/^## \([0-9][^ ]*\).*/\1/p' CHANGELOG.md | head -1)
+          if [ "$version" != "$top" ]; then
+            echo "::error file=CHANGELOG.md::manifest.json is $version but the newest CHANGELOG.md entry is $top. Add a $version entry."
+            exit 1
+          fi
+
+      - name: Package builds
+        run: |
+          scripts/package.sh
+          unzip -l dist/ultra-pr-*.zip
