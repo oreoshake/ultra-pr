@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1 — 2026-11-10
+
+- No changes to how the extension works. This is the first release signed for the Chrome Web Store's verified uploads.
+
 ## 0.3.0 — 2026-11-10
 
 - Closing either side of a split closes the other. If you separate the split first, the tabs are left alone.

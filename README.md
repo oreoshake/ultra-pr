@@ -37,7 +37,8 @@ Ultra PR doesn't collect or transmit any data. See the [privacy policy](PRIVACY.
 ## Building for the Chrome Web Store
 
 - `scripts/render-assets.sh` renders `icons/` and `store/` from the sources in `assets/` using headless Chrome.
-- `scripts/package.sh` writes the upload zip to `dist/`.
+- `scripts/package.sh` writes an unsigned zip to `dist/`.
+- `scripts/package-crx.sh "op://Private/google chrome web store/private key"` writes the signed `.crx` to `dist/`. Uploads must be signed: the store uses verified CRX uploads. The key lives in 1Password, so set `OP_ACCOUNT` if it isn't your default account. The script prints the public key's SHA-256 so you can check it's the key the dashboard expects.
 - `store/listing.md` has the listing copy and privacy answers for the dashboard.
 - Before a release, bump `version` in `manifest.json` and add an entry to `CHANGELOG.md`.
 
