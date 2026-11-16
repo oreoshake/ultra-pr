@@ -10,6 +10,14 @@ const HANDLED_KEY = "handledTabs";
 // themselves are left alone.
 const PAIRS_KEY = "pairedTabs";
 
+// tabId -> when we reloaded it to follow its split partner. Its page reports
+// that reload like any other, and it mustn't send the partner round again.
+const RELOADING_KEY = "reloadingTabs";
+
+// A reload we started that hasn't reported back within this long never will
+// (for example, the page left github.com), so don't swallow the next one.
+const RELOAD_ECHO_MS = 30_000;
+
 // Guards the check-then-set above against back-to-back URL updates
 // (e.g. GitHub redirecting /files to /changes).
 const pending = new Set();
@@ -171,6 +179,36 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   enqueue("update split view", () => onTabNavigated(tab));
 });
 
+// Reloading one side of an Ultra PR split reloads the other.
+async function reloadPartner(tabId) {
+  const reloading = await getMap(RELOADING_KEY);
+  const startedAt = reloading[tabId];
+  if (startedAt !== undefined) {
+    delete reloading[tabId];
+    await chrome.storage.session.set({ [RELOADING_KEY]: reloading });
+    if (Date.now() - startedAt < RELOAD_ECHO_MS) return; // Our own reload.
+  }
+
+  const partnerId = (await getMap(PAIRS_KEY))[tabId];
+  if (partnerId === undefined) return;
+  let tab, partner;
+  try {
+    [tab, partner] = await Promise.all([chrome.tabs.get(tabId), chrome.tabs.get(partnerId)]);
+  } catch {
+    return; // One side closed; onRemoved takes care of the pair.
+  }
+  if (!inSplit(tab) || partner.splitViewId !== tab.splitViewId) return;
+
+  reloading[partnerId] = Date.now();
+  await chrome.storage.session.set({ [RELOADING_KEY]: reloading });
+  await chrome.tabs.reload(partnerId);
+}
+
+chrome.runtime.onMessage.addListener((message, sender) => {
+  if (message.type !== "reloaded" || sender.tab === undefined) return;
+  enqueue("reload split partner", () => reloadPartner(sender.tab.id));
+});
+
 // Closing one side of an Ultra PR split closes the other.
 chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
   enqueue("clean up closed tab", async () => {
@@ -178,6 +216,11 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
     // Forget the pair first so the partner's own onRemoved doesn't come back here.
     await forgetPair(tabId);
     await setHandled(tabId, undefined);
+    const reloading = await getMap(RELOADING_KEY);
+    if (reloading[tabId] !== undefined) {
+      delete reloading[tabId];
+      await chrome.storage.session.set({ [RELOADING_KEY]: reloading });
+    }
     // When the whole window closes, the partner is going with it.
     if (partnerId === undefined || removeInfo.isWindowClosing) return;
     try {
