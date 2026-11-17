@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Reloading either side of a split reloads the other.
+
 ## 0.3.1 — 2026-11-10
 
 - No changes to how the extension works. This is the first release signed for the Chrome Web Store's verified uploads.

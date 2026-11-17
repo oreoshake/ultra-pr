@@ -9,6 +9,8 @@ Ultra PR is a Chrome extension that opens a GitHub pull request's Conversation a
 - **URLs of github.com tabs.** Ultra PR reads the address of tabs on github.com to tell whether a tab is showing a pull request and which view it's on. It doesn't access tabs on any other site.
 - **Tab IDs and split view state.** Ultra PR reads these from Chrome to decide where to open the paired tab, to keep the two tabs of a split it opened in step, and to avoid reopening a split you've separated.
 
+- **Whether a github.com page was reloaded.** Ultra PR checks this when a github.com page loads, so reloading one side of a split can reload the other.
+
 Ultra PR doesn't read page content, and it doesn't access your GitHub account, cookies or credentials.
 
 ## What the extension stores

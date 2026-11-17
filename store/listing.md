@@ -22,6 +22,7 @@ Copy these into the [Developer Dashboard](https://chrome.google.com/webstore/dev
 > - Follow a link to another pull request in either pane and the other pane follows it.
 > - Follow a link anywhere else and the other pane closes.
 > - Close either pane and the other closes with it.
+> - Reload either pane and the other reloads with it.
 > - If you separate the split, Ultra PR leaves that tab alone until it moves to a different pull request.
 >
 > Ultra PR only runs on github.com, doesn't change GitHub pages, and doesn't collect or send any data.
@@ -46,7 +47,7 @@ Copy these into the [Developer Dashboard](https://chrome.google.com/webstore/dev
 
 **Permission justifications:**
 - `storage`: Remembers, for the current browser session only, which tabs have already been paired, so the two tabs of a split stay in step and a split you separate isn't reopened.
-- Host permission `https://github.com/*`: Reads the URL of GitHub tabs to detect pull request pages and work out which view (Conversation or Files changed) to open alongside, and to notice when a paired tab moves to another pull request or leaves one.
+- Host permission `https://github.com/*`: Reads the URL of GitHub tabs to detect pull request pages and work out which view (Conversation or Files changed) to open alongside, and to notice when a paired tab moves to another pull request or leaves one. A content script on github.com tells the extension when a page was reloaded, so it can reload the other side of the split.
 
 **Remote code:** No, the extension doesn't use remote code.
 
