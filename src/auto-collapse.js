@@ -10,7 +10,7 @@
   const isTestFile = globalThis.ultraPrIsTestFile;
 
   // Must match DEFAULT_SETTINGS.collapseTests in settings.js.
-  const DEFAULT_ENABLED = false;
+  const DEFAULT_ENABLED = true;
 
   const FILES_PATH = /^\/([^/]+)\/([^/]+)\/pull\/(\d+)\/(?:files|changes)\/?$/;
   const STATE_KEY = "ultraPr.collapsed";

@@ -24,7 +24,7 @@ Copy these into the [Developer Dashboard](https://chrome.google.com/webstore/dev
 > - Close either pane and the other closes with it.
 > - If you separate the split, Ultra PR leaves that tab alone until it moves to a different pull request.
 >
-> Optionally, Ultra PR can collapse test files: on Files changed, every .test.ts and .test.tsx file is collapsed so you can focus on the code. Turn it on in the extension's options.
+> Ultra PR also collapses test files: on Files changed, every .test.ts and .test.tsx file is collapsed so you can focus on the code. Test files you expand yourself stay open.
 >
 > Each feature can be turned on or off in the extension's options. Ultra PR only runs on github.com and doesn't collect or send any data.
 >
@@ -44,11 +44,11 @@ Copy these into the [Developer Dashboard](https://chrome.google.com/webstore/dev
 ## Privacy practices
 
 **Single purpose:**
-> Make reviewing GitHub pull requests faster: open a pull request's Conversation and Files changed views together in Chrome split view, and optionally collapse test files.
+> Make reviewing GitHub pull requests faster: open a pull request's Conversation and Files changed views together in Chrome split view, and collapse test files.
 
 **Permission justifications:**
 - `storage`: Saves the two on/off settings, and remembers, for the current browser session only, which tabs have already been paired, so the two tabs of a split stay in step and a split you separate isn't reopened.
-- Host permission `https://github.com/*`: Reads the URL of GitHub tabs to detect pull request pages and work out which view (Conversation or Files changed) to open alongside, and to notice when a paired tab moves to another pull request or leaves one. When the user turns on "Collapse test files", a content script on github.com reads file names on Files changed pages and collapses test files on the page.
+- Host permission `https://github.com/*`: Reads the URL of GitHub tabs to detect pull request pages and work out which view (Conversation or Files changed) to open alongside, and to notice when a paired tab moves to another pull request or leaves one. When "Collapse test files" is on (the default), a content script on github.com reads file names on Files changed pages and collapses test files on the page.
 
 **Remote code:** No, the extension doesn't use remote code.
 

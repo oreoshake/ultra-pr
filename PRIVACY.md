@@ -2,13 +2,13 @@
 
 Effective November 25, 2026
 
-Ultra PR is a Chrome extension that opens a GitHub pull request's Conversation and Files changed views together in Chrome split view, and can optionally collapse test files. This policy describes what the extension accesses and what it does with it.
+Ultra PR is a Chrome extension that opens a GitHub pull request's Conversation and Files changed views together in Chrome split view, and collapse test files. This policy describes what the extension accesses and what it does with it.
 
 ## What the extension accesses
 
 - **URLs of github.com tabs.** Ultra PR reads the address of tabs on github.com to tell whether a tab is showing a pull request and which view it's on. It doesn't access tabs on any other site.
 - **Tab IDs and split view state.** Ultra PR reads these from Chrome to decide where to open the paired tab, to keep the two tabs of a split it opened in step, and to avoid reopening a split you've separated.
-- **File names on Files changed pages, if you turn on "Collapse test files".** Ultra PR reads the names of the files in a pull request to find test files, and collapses them on the page. This only changes what the page shows; nothing is saved to GitHub.
+- **File names on Files changed pages, while "Collapse test files" is on (the default).** Ultra PR reads the names of the files in a pull request to find test files, and collapses them on the page. This only changes what the page shows; nothing is saved to GitHub.
 
 Ultra PR doesn't read any other page content, and it doesn't access your GitHub account, cookies or credentials.
 

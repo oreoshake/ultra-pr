@@ -20,7 +20,7 @@ It can also collapse test files: on Files changed, every `.test.ts` and `.test.t
 Right-click the extension's icon and choose **Options** (or open it from `chrome://extensions`). Each feature has a checkbox:
 
 - **Open pull requests in split view:** on by default.
-- **Collapse test files:** off by default.
+- **Collapse test files:** on by default.
 
 Settings sync with your Chrome profile.
 

@@ -6,7 +6,7 @@ export const DEFAULT_SETTINGS = Object.freeze({
   // sync when following links, and close one when the other closes.
   splitView: true,
   // On Files changed, collapse every *.test.ts and *.test.tsx file.
-  collapseTests: false,
+  collapseTests: true,
 });
 
 export async function getSettings() {
