@@ -1,5 +1,6 @@
 // Content script: on a pull request's Files changed page, marks every test file
-// (see test-file.js) as Viewed, when the "Mark test files as viewed" setting is on.
+// (see test-file.js) as Viewed and collapses it, when the "Mark test files as
+// viewed" setting is on.
 //
 // Each test file is handled once per tab session: if you uncheck one, or it was
 // already viewed when it first appeared, Ultra PR leaves it alone after that.
@@ -12,6 +13,10 @@
   const FILES_PATH = /^\/([^/]+)\/([^/]+)\/pull\/(\d+)\/(?:files|changes)\/?$/;
   const HANDLED_KEY = "ultraPr.autoViewed";
   const CLICK_GAP_MS = 150;
+  // GitHub usually collapses a file when it's marked viewed, but not always
+  // (e.g. while a big PR is still loading). Check after this long and collapse
+  // it ourselves if it's still open.
+  const COLLAPSE_CHECK_MS = 1000;
 
   let enabled = false;
   let scanQueued = false;
@@ -51,7 +56,7 @@
     for (const toggle of document.querySelectorAll('button[data-telemetry-action="pull_requests.diff.toggle_viewed"]')) {
       const header = toggle.closest('[class*="diff-file-header"]') ?? toggle.closest('[id^="diff-"]');
       const path = cleanPath(header?.querySelector("h3")?.textContent ?? header?.querySelector("code")?.textContent);
-      if (path) files.push({ path, viewed: toggle.getAttribute("aria-pressed") === "true", toggle });
+      if (path) files.push({ path, viewed: toggle.getAttribute("aria-pressed") === "true", toggle, header });
     }
 
     // Classic UI (served at /files).
@@ -61,6 +66,15 @@
     }
 
     return files;
+  }
+
+  // Collapses a file we just marked viewed, if GitHub left it open. Only the
+  // current UI has a collapse button we can tell apart; the classic UI
+  // collapses viewed files itself.
+  function collapseIfOpen(path) {
+    const file = findFiles().find((f) => f.path === path && f.header);
+    if (!file?.viewed) return;
+    file.header.querySelector('button[data-telemetry-action="shared.file_header.collapse"]')?.click();
   }
 
   async function scan() {
@@ -93,6 +107,7 @@
         if (!file.toggle.isConnected) continue;
         file.toggle.click();
         markHandled(file.path);
+        setTimeout(() => collapseIfOpen(file.path), COLLAPSE_CHECK_MS);
         await new Promise((resolve) => setTimeout(resolve, CLICK_GAP_MS));
       }
     } finally {
