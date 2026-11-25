@@ -1,20 +1,27 @@
 // Content script: on a pull request's Files changed page, collapses every test
-// file (see test-file.js), when the "Collapse test files" setting is on.
-// Collapsing only changes what the page shows; nothing is saved to GitHub.
+// file and every image file (see file-kinds.js), per the "Collapse test files"
+// and "Collapse image files" settings. Collapsing only changes what the page
+// shows; nothing is saved to GitHub.
 //
 // GitHub can re-open files after they're collapsed (for example while a large
-// PR is still loading), so a test file seen open again is collapsed again, up
-// to MAX_COLLAPSES times per file per tab session. Files you open yourself, by
+// PR is still loading), so a file seen open again is collapsed again, up to
+// MAX_COLLAPSES times per file per tab session. Files you open yourself, by
 // expanding them or by going to them from the file tree or a link, stay open.
 (() => {
   const isTestFile = globalThis.ultraPrIsTestFile;
+  const isImageFile = globalThis.ultraPrIsImageFile;
 
-  // Must match DEFAULT_SETTINGS.collapseTests in settings.js.
-  const DEFAULT_ENABLED = true;
+  // Must match DEFAULT_SETTINGS in settings.js.
+  const DEFAULTS = { collapseTests: true, collapseImages: true };
+  let settings = { ...DEFAULTS };
+
+  function shouldCollapse(path) {
+    return (settings.collapseTests && isTestFile(path)) || (settings.collapseImages && isImageFile(path));
+  }
 
   const FILES_PATH = /^\/([^/]+)\/([^/]+)\/pull\/(\d+)\/(?:files|changes)\/?$/;
   const STATE_KEY = "ultraPr.collapsed";
-  const MAX_COLLAPSES = 3;
+  const MAX_COLLAPSES = 5;
   const COLLAPSE = 'button[data-telemetry-action="shared.file_header.collapse"]';
   const EXPAND = 'button[data-telemetry-action="shared.file_header.expand"]';
 
@@ -69,7 +76,7 @@
 
     for (const button of document.querySelectorAll(COLLAPSE)) {
       const file = fileFor(button);
-      if (!file || !isTestFile(file.path)) continue;
+      if (!file || !shouldCollapse(file.path)) continue;
       if (pr.userOpened.includes(file.path)) continue;
       // The file you navigated to (file tree or #diff- link) stays open.
       if (target && file.entry?.id === target) continue;
@@ -91,7 +98,7 @@
       try {
         scan();
       } catch (error) {
-        console.warn("Ultra PR: could not collapse test files", error);
+        console.warn("Ultra PR: could not collapse files", error);
       }
     }, 200);
   }
@@ -100,7 +107,7 @@
     if (prKey()) queueScan();
   });
 
-  // Remember test files you expand yourself, so they aren't collapsed again.
+  // Remember files you expand yourself, so they aren't collapsed again.
   // Only real clicks count (isTrusted), not ours.
   document.addEventListener(
     "click",
@@ -108,7 +115,7 @@
       const key = prKey();
       const button = event.isTrusted && key && event.target instanceof Element && event.target.closest(EXPAND);
       const file = button && fileFor(button);
-      if (!file || !isTestFile(file.path)) return;
+      if (!file || !shouldCollapse(file.path)) return;
       updateState(key, (state) => {
         if (!state.userOpened.includes(file.path)) state.userOpened.push(file.path);
       });
@@ -116,8 +123,9 @@
     true,
   );
 
-  function setEnabled(value) {
-    enabled = value;
+  function applySettings(next) {
+    settings = next;
+    enabled = settings.collapseTests || settings.collapseImages;
     if (enabled) {
       observer.observe(document.documentElement, { childList: true, subtree: true });
       queueScan();
@@ -126,8 +134,13 @@
     }
   }
 
-  chrome.storage.sync.get({ collapseTests: DEFAULT_ENABLED }).then(({ collapseTests }) => setEnabled(collapseTests));
+  chrome.storage.sync.get({ ...DEFAULTS }).then(applySettings);
   chrome.storage.onChanged.addListener((changes, area) => {
-    if (area === "sync" && "collapseTests" in changes) setEnabled(changes.collapseTests.newValue ?? DEFAULT_ENABLED);
+    if (area !== "sync") return;
+    const next = { ...settings };
+    for (const name of Object.keys(DEFAULTS)) {
+      if (name in changes) next[name] = changes[name].newValue ?? DEFAULTS[name];
+    }
+    applySettings(next);
   });
 })();
