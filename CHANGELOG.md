@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0 — 2026-11-25
+
+- New setting, **Collapse test files:** on Files changed, collapses every `.test.ts` and `.test.tsx` file. Test files you expand yourself stay open. On by default.
+- New setting, **Collapse image files:** on Files changed, collapses every image (PNG, JPEG, GIF, WebP, AVIF, BMP, ICO, TIFF and SVG). Images you expand yourself stay open. On by default.
+- New settings page with a checkbox for each feature, including split view (on by default).
+
 ## 0.3.1 — 2026-11-10
 
 - No changes to how the extension works. This is the first release signed for the Chrome Web Store's verified uploads.

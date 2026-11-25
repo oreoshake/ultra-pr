@@ -14,6 +14,8 @@ concurrency:
 
 jobs:
   test:
+    # The main branch ruleset requires a check named "CI".
+    name: CI
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
