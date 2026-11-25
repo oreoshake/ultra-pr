@@ -1,8 +1,8 @@
 // Content script: on a pull request's Files changed page, marks every test file
 // (see test-file.js) as Viewed, when the "Mark test files as viewed" setting is on.
 //
-// Each file is handled once per tab session: if you uncheck a test file, or it
-// was already viewed when it first appeared, Ultra PR leaves it alone after that.
+// Each test file is handled once per tab session: if you uncheck one, or it was
+// already viewed when it first appeared, Ultra PR leaves it alone after that.
 (() => {
   const isTestFile = globalThis.ultraPrIsTestFile;
 
@@ -68,7 +68,9 @@
     const key = prKey();
     if (!enabled || !key || clicking) return;
 
-    const fresh = findFiles().filter((file) => !(loadHandled()[key] ?? []).includes(file.path));
+    // Only test files are recorded, so files that don't match are looked at
+    // again on every scan (e.g. if the extension is updated to match more).
+    const fresh = findFiles().filter((file) => isTestFile(file.path) && !(loadHandled()[key] ?? []).includes(file.path));
     if (fresh.length === 0) return;
 
     // Record a file only once it's dealt with, so one that re-renders before
@@ -84,7 +86,7 @@
     try {
       for (const file of fresh) {
         if (prKey() !== key) break;
-        if (file.viewed || !isTestFile(file.path)) {
+        if (file.viewed) {
           markHandled(file.path);
           continue;
         }
