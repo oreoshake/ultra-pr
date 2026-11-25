@@ -13,6 +13,17 @@ While the split is open, the two sides stay together:
 
 Each tab is paired once per PR. If you separate the split, the extension won't reopen it until that tab navigates to a different PR.
 
+It can also mark test files as viewed: on Files changed, every `.test.ts` file gets its **Viewed** box checked. If you uncheck one, it's left alone.
+
+## Settings
+
+Right-click the extension's icon and choose **Options** (or open it from `chrome://extensions`). Each feature has a checkbox:
+
+- **Open pull requests in split view:** on by default.
+- **Mark test files as viewed:** off by default.
+
+Settings sync with your Chrome profile.
+
 ## Requirements
 
 Chrome 155+ (for `chrome.tabs.create({ splitWithTabId })`).

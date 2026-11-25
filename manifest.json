@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Ultra PR",
-  "version": "0.3.1",
-  "description": "Keeps a GitHub pull request's Conversation and Files changed views side by side in split view.",
+  "version": "0.4.0",
+  "description": "Keeps a GitHub pull request's Conversation and Files changed views side by side in split view, and can mark test files as viewed.",
   "minimum_chrome_version": "155",
   "icons": {
     "16": "icons/icon16.png",
@@ -14,6 +14,26 @@
     "service_worker": "src/background.js",
     "type": "module"
   },
-  "permissions": ["storage"],
-  "host_permissions": ["https://github.com/*"]
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://github.com/*"
+  ],
+  "options_ui": {
+    "page": "src/options.html",
+    "open_in_tab": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/*"
+      ],
+      "js": [
+        "src/test-file.js",
+        "src/auto-view.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
 }

@@ -1,5 +1,6 @@
 import { parsePrUrl } from "./pr-url.js";
 import { syncPartner } from "./sync.js";
+import { getSettings } from "./settings.js";
 
 // tabId -> PR key we've already paired for that tab. Kept in session storage
 // so a service worker restart doesn't re-open splits the user already dismissed.
@@ -123,6 +124,7 @@ async function syncSplit(tab) {
 }
 
 async function onTabNavigated(tab) {
+  if (!(await getSettings()).splitView) return;
   if (await syncSplit(tab)) return;
   await pairPrTab(tab);
 }
@@ -180,6 +182,7 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
     await setHandled(tabId, undefined);
     // When the whole window closes, the partner is going with it.
     if (partnerId === undefined || removeInfo.isWindowClosing) return;
+    if (!(await getSettings()).splitView) return;
     try {
       await chrome.tabs.remove(partnerId);
     } catch {

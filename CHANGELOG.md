@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0 — 2026-11-25
+
+- New setting, **Mark test files as viewed:** on Files changed, checks Viewed for every `.test.ts` file. Files you uncheck are left alone. Off by default.
+- New settings page with a checkbox for each feature, including split view (on by default).
+
 ## 0.3.1 — 2026-11-10
 
 - No changes to how the extension works. This is the first release signed for the Chrome Web Store's verified uploads.
