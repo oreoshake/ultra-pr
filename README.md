@@ -13,7 +13,7 @@ While the split is open, the two sides stay together:
 
 Each tab is paired once per PR. If you separate the split, the extension won't reopen it until that tab navigates to a different PR.
 
-It can also mark test files as viewed: on Files changed, every `.test.ts` file gets its **Viewed** box checked. If you uncheck one, it's left alone.
+It can also mark test files as viewed: on Files changed, every `.test.ts` and `.test.tsx` file gets its **Viewed** box checked. If you uncheck one, it's left alone.
 
 ## Settings
 

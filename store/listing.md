@@ -24,7 +24,7 @@ Copy these into the [Developer Dashboard](https://chrome.google.com/webstore/dev
 > - Close either pane and the other closes with it.
 > - If you separate the split, Ultra PR leaves that tab alone until it moves to a different pull request.
 >
-> Optionally, Ultra PR can mark test files as viewed: on Files changed, it checks Viewed for every .test.ts file. Turn it on in the extension's options.
+> Optionally, Ultra PR can mark test files as viewed: on Files changed, it checks Viewed for every .test.ts and .test.tsx file. Turn it on in the extension's options.
 >
 > Each feature can be turned on or off in the extension's options. Ultra PR only runs on github.com and doesn't collect or send any data.
 >

@@ -4,13 +4,15 @@ import "../src/test-file.js";
 
 const isTestFile = globalThis.ultraPrIsTestFile;
 
-test("matches .test.ts files at any depth", () => {
+test("matches .test.ts and .test.tsx files at any depth", () => {
   assert.equal(isTestFile("foo.test.ts"), true);
   assert.equal(isTestFile("packages/core/src/utils/foo.test.ts"), true);
+  assert.equal(isTestFile("Button.test.tsx"), true);
+  assert.equal(isTestFile("src/components/Button.test.tsx"), true);
 });
 
 test("ignores other test and source files", () => {
-  for (const path of ["foo.ts", "foo.test.tsx", "foo.spec.ts", "foo.test.js", "foo.test.ts.snap", "test.ts", "foo.test.d.ts.map"]) {
+  for (const path of ["foo.ts", "foo.tsx", "foo.spec.ts", "foo.spec.tsx", "foo.test.tsx.snap", "foo.test.js", "foo.test.ts.snap", "test.ts", "foo.test.d.ts.map"]) {
     assert.equal(isTestFile(path), false, path);
   }
 });

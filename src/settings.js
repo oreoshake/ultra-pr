@@ -5,7 +5,7 @@ export const DEFAULT_SETTINGS = Object.freeze({
   // Open a PR's Conversation and Files changed side by side, keep the two in
   // sync when following links, and close one when the other closes.
   splitView: true,
-  // On Files changed, mark every *.test.ts file as Viewed.
+  // On Files changed, mark every *.test.ts and *.test.tsx file as Viewed.
   autoViewTests: false,
 });
 
