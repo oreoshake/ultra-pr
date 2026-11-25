@@ -13,14 +13,14 @@ While the split is open, the two sides stay together:
 
 Each tab is paired once per PR. If you separate the split, the extension won't reopen it until that tab navigates to a different PR.
 
-It can also mark test files as viewed: on Files changed, every `.test.ts` and `.test.tsx` file gets its **Viewed** box checked. If you uncheck one, it's left alone.
+It can also collapse test files: on Files changed, every `.test.ts` and `.test.tsx` file is collapsed. Test files you expand yourself, or go to from the file tree or a link, stay open. Collapsing only changes what the page shows; nothing is saved to GitHub.
 
 ## Settings
 
 Right-click the extension's icon and choose **Options** (or open it from `chrome://extensions`). Each feature has a checkbox:
 
 - **Open pull requests in split view:** on by default.
-- **Mark test files as viewed:** off by default.
+- **Collapse test files:** off by default.
 
 Settings sync with your Chrome profile.
 

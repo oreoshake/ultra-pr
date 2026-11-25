@@ -1,12 +1,12 @@
 // User settings, kept in chrome.storage.sync so they follow the user's Chrome
-// profile across devices. The content script reads autoViewTests directly
+// profile across devices. The content script reads collapseTests directly
 // (it can't import modules), so keep its default in step with the one there.
 export const DEFAULT_SETTINGS = Object.freeze({
   // Open a PR's Conversation and Files changed side by side, keep the two in
   // sync when following links, and close one when the other closes.
   splitView: true,
-  // On Files changed, mark every *.test.ts and *.test.tsx file as Viewed.
-  autoViewTests: false,
+  // On Files changed, collapse every *.test.ts and *.test.tsx file.
+  collapseTests: false,
 });
 
 export async function getSettings() {

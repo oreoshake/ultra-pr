@@ -2,7 +2,7 @@
 
 ## 0.4.0 — 2026-11-25
 
-- New setting, **Mark test files as viewed:** on Files changed, checks Viewed for every `.test.ts` and `.test.tsx` file. Files you uncheck are left alone. Off by default.
+- New setting, **Collapse test files:** on Files changed, collapses every `.test.ts` and `.test.tsx` file. Test files you expand yourself stay open. Off by default.
 - New settings page with a checkbox for each feature, including split view (on by default).
 
 ## 0.3.1 — 2026-11-10

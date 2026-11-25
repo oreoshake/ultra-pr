@@ -1,5 +1,5 @@
-// Decides which changed files Ultra PR marks as viewed. Loaded as a classic
-// content script ahead of auto-view.js, so it shares a global instead of
+// Decides which changed files Ultra PR collapses. Loaded as a classic
+// content script ahead of auto-collapse.js, so it shares a global instead of
 // exporting; the unit tests import it the same way.
 globalThis.ultraPrIsTestFile = function isTestFile(path) {
   if (typeof path !== "string") return false;

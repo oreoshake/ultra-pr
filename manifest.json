@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Ultra PR",
   "version": "0.4.0",
-  "description": "Keeps a GitHub pull request's Conversation and Files changed views side by side in split view, and can mark test files as viewed.",
+  "description": "Keeps a GitHub pull request's Conversation and Files changed views side by side in split view, and can collapse test files.",
   "minimum_chrome_version": "155",
   "icons": {
     "16": "icons/icon16.png",
@@ -31,7 +31,7 @@
       ],
       "js": [
         "src/test-file.js",
-        "src/auto-view.js"
+        "src/auto-collapse.js"
       ],
       "run_at": "document_idle"
     }
